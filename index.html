@@ -1,4 +1,4 @@
-<script>
+<script defer>
 function showNotificationWithButtons() {
     // Check if the browser supports notifications
     if ('Notification' in window && Notification.permission === 'granted') {
@@ -55,6 +55,8 @@ document.getElementById('notificationButton').addEventListener('click', function
         }
     });
 });
+
+            
 </script>
 // Trigger the notification with buttons
 
