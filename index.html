@@ -1,1 +1,62 @@
-test
+<script>
+function showNotificationWithButtons() {
+    // Check if the browser supports notifications
+    if ('Notification' in window && Notification.permission === 'granted') {
+        // Create a notification with buttons
+        var notification = new Notification('New Message', {
+            body: 'You have a new message',
+            icon: 'icon.png',
+            actions: [
+                { action: 'reply', title: 'Reply' },
+                { action: 'dismiss', title: 'Dismiss' }
+            ]
+        });
+
+        // Handle notification click event
+        notification.onclick = function(event) {
+            // Perform actions based on clicked button
+            switch(event.action) {
+                case 'reply':
+                    // Handle reply action
+                    console.log('Reply clicked');
+                    break;
+                case 'dismiss':
+                    // Handle dismiss action
+                    console.log('Dismiss clicked');
+                    break;
+                default:
+                    // Handle default click (notification body clicked)
+                    console.log('Notification clicked');
+                    break;
+            }
+
+            // Close the notification
+            notification.close();
+        };
+    } else if ('Notification' in window && Notification.permission !== 'denied') {
+        // Request permission to display notifications
+        Notification.requestPermission().then(function(permission) {
+            if (permission === 'granted') {
+                // If permission is granted, trigger the notification
+                showNotificationWithButtons();
+            }
+        });
+    } else {
+        // If permission is denied or notifications are not supported, handle accordingly
+        console.error('Notifications not supported or permission denied');
+    }
+}
+
+document.getElementById('notificationButton').addEventListener('click', function() {
+    Notification.requestPermission().then(function(permission) {
+        if (permission === 'granted') {
+            // If permission is granted, trigger the notification
+            showNotificationWithButtons();
+        }
+    });
+});
+</script>
+// Trigger the notification with buttons
+
+<button onclick='showNotificationWithButtons();'>test</button>
+<button id='notificationButton' onclick='showNotificationWithButtons();'>notificationButton</button>
